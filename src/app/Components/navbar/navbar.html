@@ -1,0 +1,110 @@
+<header class="navbar">
+  <div class="navbar__inner">
+
+    <!-- Left: brand + primary nav -->
+    <div class="navbar__left">
+      <a class="navbar__brand" routerLink="/">
+        <span class="navbar__brand-mark">{{ storeName.charAt(0) }}</span>
+        <span class="navbar__brand-name">{{ storeName }}</span>
+      </a>
+
+      <nav class="navbar__nav" aria-label="Primary">
+        <a class="navbar__link" routerLink="/" routerLinkActive="navbar__link--active"
+          [routerLinkActiveOptions]="{ exact: true }">
+          <i class="pi pi-home"></i>
+          <span>Home</span>
+        </a>
+
+        <button type="button" class="navbar__link navbar__link--menu" (click)="categoryMenu.toggle($event)"
+          aria-haspopup="true" [disabled]="categoriesLoading || categoriesError">
+          <i class="pi" [class.pi-th-large]="!categoriesLoading" [class.pi-spin]="categoriesLoading"
+            [class.pi-spinner]="categoriesLoading"></i>
+          <span>Categories</span>
+          <i class="pi pi-angle-down navbar__caret" *ngIf="!categoriesLoading"></i>
+        </button>
+        <p-menu #categoryMenu [model]="categoryItems" [popup]="true" appendTo="body" />
+
+      </nav>
+    </div>
+
+    <!-- Center: search
+    <div class="navbar__center">
+      <form class="navbar__search" (ngSubmit)="onSearchSubmit()">
+        <p-iconfield class="navbar__search-field" iconPosition="left">
+          <p-inputicon class="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            name="search"
+            placeholder="Search products, brands and categories"
+            [(ngModel)]="searchTerm"
+            aria-label="Search products"
+            (ngModelChange)="suggestion($event)"
+          />
+
+        </p-iconfield>
+        <p-button type="submit" label="Search" size="small" styleClass="navbar__search-btn" />
+      </form>
+    </div> -->
+
+
+
+
+<!-- Center: search -->
+<div class="navbar__center">
+  <div class="navbar__search-container">
+    <form class="navbar__search" (ngSubmit)="onSearchSubmit()">
+      <p-autocomplete
+        [(ngModel)]="searchTerm"
+        name="search"
+        [suggestions]="suggestions"
+        (completeMethod)="search($event)"
+        (onSelect)="onSuggestionSelect($event.value)"
+        field="name"
+        [delay]="300"
+        [minLength]="1"
+        placeholder="Search products, brands and categories"
+        aria-label="Search products"
+        styleClass="navbar__search-field"
+      >
+        <ng-template let-item pTemplate="item">
+          <div class="suggestion-info">
+            <span class="suggestion-name">{{ item.name }}</span>
+            <span class="suggestion-description">{{ item.description }}</span>
+          </div>
+          <span class="suggestion-price">
+            Rs. {{ item.price | number }}
+          </span>
+        </ng-template>
+      </p-autocomplete>
+
+      <p-button type="submit" label="Search" size="small" styleClass="navbar__search-btn" />
+
+    </form>
+
+  </div>
+</div>
+    <!-- Right: cart + profile -->
+        <p-toast position="top-left" key="tl" />
+    <div class="navbar__right">
+      <button type="button" class="navbar__icon-btn" (click)="onCartClick()" aria-label="Cart">
+        <p-overlaybadge [value]="cartCount > 0 ? (cartCount > 99 ? '99+' : cartCount) : undefined" severity="danger">
+          <i class="pi pi-shopping-cart navbar__cart-icon"></i>
+        </p-overlaybadge>
+      </button>
+
+  <p-button icon="pi pi-user" label="Login" [routerLink]="'signin'"></p-button>
+      <button type="button" class="navbar__profile" (click)="profileMenu.toggle($event)" aria-haspopup="true"
+        [attr.aria-label]="'Account for ' + userName">
+        @if (userAvatarUrl) {
+        <p-avatar [image]="userAvatarUrl" shape="circle" size="normal" />
+        } @else {
+        <p-avatar [label]="initials" shape="circle" size="normal" styleClass="navbar__avatar-fallback" />
+        }
+        <i class="pi pi-angle-down navbar__caret"></i>
+      </button>
+      <p-menu #profileMenu [model]="profileItems" [popup]="true" appendTo="body" />
+    </div>
+
+  </div>
+</header>

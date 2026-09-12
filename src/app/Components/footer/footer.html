@@ -1,0 +1,123 @@
+<p-toast position="bottom-right" />
+
+<footer class="bg-[#0b0b0b] border-t border-white/10 text-gray-300">
+  <!-- Newsletter strip -->
+  <div class="border-b border-white/10">
+    <div
+      class="max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5"
+    >
+      <div>
+        <h3 class="text-white text-lg font-semibold">Get deals before anyone else</h3>
+        <p class="text-sm text-gray-400 mt-1">
+          One email a week. Price drops, restocks, no spam.
+        </p>
+      </div>
+
+      <div class="flex w-full lg:w-auto gap-3">
+        <input
+          type="email"
+          pInputText
+          [(ngModel)]="email"
+          (keyup.enter)="subscribe()"
+          placeholder="you@example.com"
+          class="w-full lg:w-80 bg-[#161616] border-white/15 text-white placeholder:text-gray-500"
+        />
+        <p-button
+          label="Subscribe"
+          (onClick)="subscribe()"
+          styleClass="!bg-emerald-500 !border-emerald-500 hover:!bg-emerald-400 !text-black !font-medium whitespace-nowrap"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Main footer content -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    <!-- Brand -->
+    <div class="lg:col-span-2">
+      <div class="flex items-center gap-2">
+        <div
+          class="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center text-black font-bold"
+        >
+          M
+        </div>
+        <span class="text-white text-xl font-semibold">Marketa</span>
+      </div>
+
+      <p class="mt-4 text-sm text-gray-400 leading-relaxed max-w-sm">
+        Genuine electronics at fair prices, delivered across Pakistan with easy
+        returns and verified sellers you can trust.
+      </p>
+
+      <div class="flex items-center gap-3 mt-5">
+        @for (social of socialLinks; track social.label) {
+          <a
+            [href]="social.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.label"
+            class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-gray-400 hover:text-emerald-400 hover:border-emerald-400 transition-colors"
+          >
+            @switch (social.label) {
+              @case ('Facebook') { <i class="pi pi-facebook text-sm"></i> }
+              @case ('Instagram') { <i class="pi pi-instagram text-sm"></i> }
+              @case ('X') { <i class="pi pi-twitter text-sm"></i> }
+              @case ('YouTube') { <i class="pi pi-youtube text-sm"></i> }
+            }
+          </a>
+        }
+      </div>
+    </div>
+
+    <!-- Link columns -->
+    @for (column of columns; track column.title) {
+      <div>
+        <h4 class="text-white font-semibold text-sm tracking-wide">{{ column.title }}</h4>
+        <ul class="mt-4 space-y-3">
+          @for (link of column.links; track link.label) {
+            <li>
+              <a
+                [href]="link.url"
+                class="text-sm text-gray-400 hover:text-emerald-400 transition-colors"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
+  <p-divider styleClass="!m-0 !border-white/10" />
+
+  <!-- Bottom bar -->
+  <div
+    class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-5"
+  >
+    <p class="text-xs text-gray-500 text-center sm:text-left">
+      © {{ currentYear }} Marketa. All rights reserved.
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-5">
+      <div class="flex items-center gap-3">
+        @for (method of paymentMethods; track method.label) {
+          <i
+            [class]="method.icon"
+            [attr.aria-label]="method.label"
+            class="text-gray-500 text-base"
+          ></i>
+        }
+      </div>
+
+      <p-select
+        [options]="currencyOptions"
+        [ngModel]="currency()"
+        (ngModelChange)="currency.set($event)"
+        optionLabel="label"
+        optionValue="value"
+        styleClass="!bg-[#161616] !border-white/15 !text-gray-300 !text-xs w-28"
+      />
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+::ng-deep {
+  .p-select {
+    border-radius: 0.5rem;
+  }
+
+  .p-select .p-select-label {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .p-inputtext:focus {
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.5);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+}

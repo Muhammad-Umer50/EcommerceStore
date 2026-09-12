@@ -1,0 +1,369 @@
+:host {
+    --nav-bg: #000000;
+    --nav-border: #418466;
+    --nav-ink: #3f614f;
+    --nav-ink-muted: #6b7570;
+    --nav-primary: #01cf8e;
+    --nav-primary-dark: #0e6e4e;
+    --nav-accent: #ff6b4a;
+    --nav-surface: #f4f1e9;
+    --nav-radius: 10px;
+    --nav-height: 72px;
+    display: block;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+}
+
+.navbar__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  height: var(--nav-height);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Left: brand + nav ---------- */
+.navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-width: 0;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--nav-ink);
+}
+
+.navbar__brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--nav-primary);
+  color: #fff;
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.navbar__brand-name {
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border: none;
+  background: transparent;
+  border-radius: var(--nav-radius);
+  color: var(--nav-ink-muted);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar__link:hover {
+  background: rgb(34, 198, 135);
+  color: var(--nav-ink);
+}
+
+.navbar__link--active {
+  color: var(--nav-primary);
+}
+
+.navbar__link i:first-child {
+  font-size: 15px;
+}
+
+.navbar__link:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.navbar__link:disabled:hover {
+  background: transparent;
+}
+
+.navbar__caret {
+  font-size: 11px;
+  margin-left: -1px;
+  opacity: 0.7;
+}
+
+/* ---------- Center: search ---------- */
+.navbar__center {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.navbar__search-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.navbar__search {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  max-width: 560px;
+}
+
+/* p-autocomplete root wrapper — styleClass="navbar__search-field" lands here */
+:host ::ng-deep .navbar__search-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+:host ::ng-deep .navbar__search-field .p-autocomplete-input-multiple,
+:host ::ng-deep .navbar__search-field .p-autocomplete-input,
+:host ::ng-deep .navbar__search-field.p-autocomplete .p-inputtext,
+:host ::ng-deep .navbar__search-field input {
+  width: 100%;
+  height: 42px;
+  border-radius: var(--nav-radius) 0 0 var(--nav-radius);
+  border: 1px solid var(--nav-border);
+  border-right: none;
+  background: #141816;
+  color: var(--nav-surface);
+  font-size: 14px;
+  padding: 0 14px;
+  box-shadow: none;
+}
+
+:host ::ng-deep .navbar__search-field input::placeholder {
+  color: var(--nav-ink-muted);
+}
+
+:host ::ng-deep .navbar__search-field .p-autocomplete-input:focus,
+:host ::ng-deep .navbar__search-field .p-inputtext:focus,
+:host ::ng-deep .navbar__search-field input:focus {
+  box-shadow: none;
+  outline: none;
+  border-color: var(--nav-primary);
+  background: #14241c;
+}
+
+:host ::ng-deep .navbar__search-btn {
+  height: 42px;
+  border-radius: 0 var(--nav-radius) var(--nav-radius) 0;
+  background: var(--nav-primary);
+  border-color: var(--nav-primary);
+  padding: 0 18px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+:host ::ng-deep .navbar__search-btn:hover {
+  background: var(--nav-primary-dark);
+  border-color: var(--nav-primary-dark);
+}
+
+/* ---------- Right: cart + profile ---------- */
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+}
+
+.navbar__icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.navbar__icon-btn:hover {
+  background: var(--nav-surface);
+}
+
+.navbar__cart-icon {
+  font-size: 19px;
+  color: var(--nav-ink);
+}
+
+:host ::ng-deep .navbar__icon-btn .p-overlaybadge .p-badge {
+  background: var(--nav-accent);
+  border: 2px solid var(--nav-bg);
+}
+
+.navbar__profile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.navbar__profile:hover {
+  background: var(--nav-surface);
+}
+
+:host ::ng-deep .navbar__avatar-fallback {
+  background: var(--nav-primary) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .navbar__inner {
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      'left right'
+      'center center';
+    height: auto;
+    padding: 12px 16px;
+    row-gap: 10px;
+  }
+
+  .navbar__left {
+    grid-area: left;
+  }
+
+  .navbar__right {
+    grid-area: right;
+  }
+
+  .navbar__center {
+    grid-area: center;
+  }
+
+  .navbar__link span:not(.navbar__caret) {
+    display: none;
+  }
+
+  .navbar__link {
+    padding: 9px 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .navbar__brand-name {
+    display: none;
+  }
+
+  :host ::ng-deep .navbar__search-btn .p-button-label {
+    display: none;
+  }
+
+  :host ::ng-deep .navbar__search-btn {
+    padding: 0 14px;
+  }
+}
+
+/* ---------- Search: autocomplete dropdown panel ---------- */
+:host ::ng-deep .p-autocomplete-panel {
+  margin-top: 6px;
+  border-radius: var(--nav-radius);
+  border: 1px solid var(--nav-border);
+  background: #0b0f0d;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  max-height: 380px;
+}
+
+:host ::ng-deep .p-autocomplete-list {
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+}
+
+:host ::ng-deep .p-autocomplete-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+:host ::ng-deep .p-autocomplete-option:hover,
+:host ::ng-deep .p-autocomplete-option.p-autocomplete-option-selected,
+:host ::ng-deep .p-autocomplete-option.p-focus {
+  background: rgba(1, 207, 142, 0.12);
+}
+
+:host ::ng-deep .p-autocomplete-empty-message {
+  padding: 14px 12px;
+  color: var(--nav-ink-muted);
+  font-size: 13.5px;
+}
+
+/* ---------- Search: suggestion item template ---------- */
+.suggestion-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.suggestion-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--nav-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-description {
+  font-size: 12px;
+  color: var(--nav-ink-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-price {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nav-primary);
+}

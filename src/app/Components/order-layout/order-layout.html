@@ -1,0 +1,126 @@
+<div class="max-w-4xl mx-auto p-4 md:p-6">
+  <h1 class="text-2xl font-semibold text-surface-900 dark:text-surface-0 mb-6">
+    My Orders
+  </h1>
+
+  <!-- Loading skeleton -->
+  @if (loading()) {
+    <div class="flex flex-col gap-4">
+      @for (row of skeletonRows; track $index) {
+        <p-card>
+          <div class="flex flex-col gap-3">
+            <p-skeleton width="40%" height="1.25rem" />
+            <p-skeleton width="100%" height="3rem" />
+            <p-skeleton width="30%" height="1.25rem" />
+          </div>
+        </p-card>
+      }
+    </div>
+  }
+
+  <!-- Empty state -->
+  @else if (!hasOrders()) {
+    <div class="flex flex-col items-center justify-center text-center py-16 gap-3">
+      <i class="pi pi-shopping-bag text-4xl text-surface-400"></i>
+      <p class="text-surface-600 dark:text-surface-300">You haven't placed any orders yet.</p>
+    </div>
+  }
+
+  <!-- Orders list -->
+  @else {
+    <div class="flex flex-col gap-4">
+      @for (order of sortedOrders(); track trackByOrder($index, order)) {
+        <p-card styleClass="shadow-sm border border-surface-200 dark:border-surface-700 rounded-xl">
+          <ng-template #header>
+            <div class="flex flex-wrap items-center justify-between gap-3 px-4 pt-4">
+              <div>
+                <p class="text-sm text-surface-500">
+                  {{ order.orderDate | date: 'medium' }}
+                </p>
+                <p class="text-sm text-surface-500">
+                  {{ itemCount(order) }} item{{ itemCount(order) > 1 ? 's' : '' }}
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <p-tag [value]="statusLabel(order.status)" [severity]="statusSeverity(order.status)" />
+                <p-tag [value]="paymentLabel(order.paymentStatus)" [severity]="paymentSeverity(order.paymentStatus)" />
+              </div>
+            </div>
+          </ng-template>
+
+          <!-- Items -->
+          <div class="flex flex-col divide-y divide-surface-200 dark:divide-surface-700">
+            @for (item of order.orderItems; track trackByProductId($index, item)) {
+              <div class="flex items-center justify-between py-3 gap-4">
+                <div class="flex flex-col">
+                  <span class="font-medium text-surface-900 dark:text-surface-0">
+                    {{ item.productName }}
+                  </span>
+                  <span class="text-sm text-surface-500">
+                    Qty {{ item.quantity }} &times; {{ item.unitPrice | currency: currencyCode() }}
+                  </span>
+                </div>
+                <span class="font-medium text-surface-900 dark:text-surface-0 whitespace-nowrap">
+                  {{ item.totalPrice | currency: currencyCode() }}
+                </span>
+              </div>
+            }
+          </div>
+
+          <p-divider styleClass="my-3" />
+
+          <!-- Shipping + payment details, collapsed by default -->
+          <p-accordion [multiple]="true">
+            <p-accordion-panel value="0">
+              <p-accordion-header>
+                <span class="text-sm font-medium">Shipping & Payment</span>
+              </p-accordion-header>
+              <p-accordion-content>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p class="text-surface-500 mb-1">Shipping Address</p>
+                    <p class="text-surface-800 dark:text-surface-100">
+                      {{ order.shippingAddressDetails.address }},
+                      {{ order.shippingAddressDetails.city }},
+                      {{ order.shippingAddressDetails.country }}
+                    </p>
+                  </div>
+                  <div>
+                    <p class="text-surface-500 mb-1">Shipping Method</p>
+                    <p class="text-surface-800 dark:text-surface-100">{{ order.shippingMethod }}</p>
+                  </div>
+                  <div>
+                    <p class="text-surface-500 mb-1">Payment Method</p>
+                    <p class="text-surface-800 dark:text-surface-100 capitalize">{{ order.paymentMethod }}</p>
+                  </div>
+                </div>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
+
+          <p-divider styleClass="my-3" />
+
+          <!-- Totals -->
+          <div class="flex flex-col gap-1 text-sm ml-auto max-w-xs">
+            <div class="flex justify-between text-surface-600 dark:text-surface-300">
+              <span>Subtotal</span>
+              <span>{{ order.subtotal | currency: currencyCode() }}</span>
+            </div>
+            <div class="flex justify-between text-surface-600 dark:text-surface-300">
+              <span>Tax</span>
+              <span>{{ order.tax | currency: currencyCode() }}</span>
+            </div>
+            <div class="flex justify-between text-surface-600 dark:text-surface-300">
+              <span>Shipping</span>
+              <span>{{ order.shippingCost | currency: currencyCode() }}</span>
+            </div>
+            <div class="flex justify-between font-semibold text-surface-900 dark:text-surface-0 pt-1 border-t border-surface-200 dark:border-surface-700 mt-1">
+              <span>Total</span>
+              <span>{{ order.totalAmount | currency: currencyCode() }}</span>
+            </div>
+          </div>
+        </p-card>
+      }
+    </div>
+  }
+</div>

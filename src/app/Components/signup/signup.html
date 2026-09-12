@@ -1,0 +1,114 @@
+<p-toast />
+
+<div class="flex items-center justify-center min-h-screen bg-surface-50 dark:bg-surface-900 px-4">
+    <div class="card !p-0 w-full max-w-md overflow-hidden rounded-2xl shadow-lg border border-surface-200 dark:border-surface-700">
+
+        <!-- Header -->
+        <div class="flex flex-col items-center gap-1 text-center pt-10 pb-4 px-6 bg-surface-50 dark:bg-surface-800/40">
+            <i class="pi pi-sparkles text-3xl text-green-500 mb-1"></i>
+            <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">Create your account</span>
+            <span class="text-sm text-surface-500">Join us — it only takes a minute</span>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 px-8 py-8">
+
+            <!-- Full Name -->
+            <div class="flex flex-col gap-2">
+                <label for="fullName" class="text-sm font-medium">Full Name</label>
+                <input
+                    pInputText
+                    id="fullName"
+                    type="text"
+                    formControlName="fullName"
+                    placeholder="John Doe"
+                    class="w-full"
+                    [class.ng-invalid]="isInvalid('fullName')"
+                    [class.ng-dirty]="isInvalid('fullName')"
+                />
+                @if (isInvalid('fullName')) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Full name must be at least 2 characters.
+                    </p-message>
+                }
+            </div>
+
+
+
+            <!-- Email -->
+            <div class="flex flex-col gap-2">
+                <label for="email" class="text-sm font-medium">Email</label>
+                <input
+                    pInputText
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    placeholder="john@example.com"
+                    class="w-full"
+                    [class.ng-invalid]="isInvalid('email')"
+                    [class.ng-dirty]="isInvalid('email')"
+                />
+                @if (isInvalid('email')) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Enter a valid email address.
+                    </p-message>
+                }
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-2">
+                <label for="password" class="text-sm font-medium">Password</label>
+                <p-password
+                    inputId="password"
+                    formControlName="password"
+                    [toggleMask]="true"
+                    [feedback]="true"
+                    styleClass="w-full"
+                    inputStyleClass="w-full"
+                    placeholder="At least 8 characters"
+                    [class.ng-invalid]="isInvalid('password')"
+                    [class.ng-dirty]="isInvalid('password')"
+                />
+                @if (isInvalid('password')) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Must be 8+ characters with upper, lower & a number.
+                    </p-message>
+                }
+            </div>
+
+
+            <!-- Terms
+            <div class="flex flex-col gap-2 mt-1">
+                <div class="flex items-center gap-2">
+                    <p-checkbox formControlName="acceptTerms" [binary]="true" inputId="acceptTerms" />
+                    <label for="acceptTerms" class="text-sm text-surface-600 dark:text-surface-300">
+                        I agree to the <a href="#" class="text-primary-500 hover:underline">Terms</a> &amp;
+                        <a href="#" class="text-primary-500 hover:underline">Privacy Policy</a>
+                    </label>
+                </div>
+                @if (isInvalid('acceptTerms')) {
+                    <p-message severity="error" variant="simple" size="small">
+                        You must accept the terms to continue.
+                    </p-message>
+                }
+            </div> -->
+
+            <!-- Submit -->
+            <p-button
+                type="submit"
+                label="Create Account"
+                icon="pi pi-user-plus"
+                severity="success"
+                [loading]="loading()"
+                styleClass="w-full !py-3 !font-semibold !rounded-lg mt-2"
+            />
+
+            <p-divider align="center"><span class="text-xs text-surface-400">OR</span></p-divider>
+
+            <p class="text-center text-sm text-surface-500">
+                Already have an account?
+                <a [routerLink]="'/signin'" class="text-primary-500 font-medium hover:underline">Log in</a>
+            </p>
+        </form>
+    </div>
+</div>

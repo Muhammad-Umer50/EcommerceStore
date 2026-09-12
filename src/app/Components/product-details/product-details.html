@@ -1,0 +1,69 @@
+<div class="container mx-auto max-w-6xl p-4 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8 w-full">
+  <div class="gallery w-full md:flex-1 md:max-w-125">
+    <p-galleria
+      [value]="images()"
+      [showIndicators]="true"
+      [showThumbnails]="false"
+      [changeItemOnIndicatorHover]="true">
+      <ng-template #item let-item>
+        <img
+          [src]="mainurl + item.url"
+          class="w-full h-auto block rounded-lg object-cover"
+        />
+      </ng-template>
+    </p-galleria>
+  </div>
+
+  @if (productDetails) {
+    <aside class="details w-full md:flex-1 py-4 flex flex-col gap-4">
+      <div>
+        <h1 class="text-3xl font-semibold text-white">{{ productDetails.name }}</h1>
+        <p class="text-gray-400 mt-1">{{ productDetails.description }}</p>
+      </div>
+
+      <p-rating
+        [ngModel]="productDetails.rating"
+        [readonly]="true"
+        [stars]="5"
+        styleClass="pointer-events-none">
+      </p-rating>
+
+      <div class="flex items-baseline gap-3">
+        @if (productDetails.priceDiscount > 0) {
+          <span class="text-3xl font-bold text-white">
+            {{ productDetails.priceDiscount | currency }}
+          </span>
+          <span class="text-lg text-gray-500 line-through">
+            {{ productDetails.price | currency }}
+          </span>
+        } @else {
+          <span class="text-3xl font-bold text-white">
+            {{ productDetails.price | currency }}
+          </span>
+        }
+      </div>
+
+      <div class="flex items-center gap-2 text-sm">
+        @if (productDetails.isAvailable && productDetails.stockQuantity > 0) {
+          <span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+          <span class="text-green-400 font-medium">In stock</span>
+          <span class="text-gray-500">({{ productDetails.stockQuantity }} available)</span>
+        } @else {
+          <span class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+          <span class="text-red-400 font-medium">Out of stock</span>
+        }
+      </div>
+      <p-toast />
+      <p-button
+      pRipple
+      (onClick)="showSuccess()"
+        label="Add to Cart"
+        icon="pi pi-shopping-cart"
+        styleClass="w-full md:w-auto mt-2"
+        [disabled]="!productDetails.isAvailable || productDetails.stockQuantity === 0"
+        (onClick)="addToCart(productDetails)"
+        >
+      </p-button>
+    </aside>
+  }
+</div>

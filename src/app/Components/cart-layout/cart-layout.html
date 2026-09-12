@@ -1,0 +1,134 @@
+<div class="mx-auto max-w-5xl px-4 py-8">
+  <h1 class="mb-6 text-2xl font-semibold ">
+    My Shopping Cart
+    <span class="ml-2 text-base font-normal text-surface-500">({{ itemCount() }} items)</span>
+  </h1>
+
+  @if (cartItems().length === 0) {
+    <div class="rounded-xl border border-surface-200 bg-surface-0 p-12 text-center">
+      <p class="text-lg font-medium text-surface-700">Your cart is empty</p>
+      <p class="mt-1 text-sm text-surface-500">Items you add will show up here.</p>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <!-- Left column: items + billing + shipping -->
+      <div class="space-y-6 lg:col-span-2">
+        <!-- Cart items -->
+        <p-card header="Shopping Cart">
+          <div class="divide-y divide-surface-200">
+            @for (item of cartItems(); track item.id) {
+              <div class="flex items-center gap-4 py-4">
+                <img
+                  [src]="getMainImage(item)"
+                  [alt]="item.cartProductDto.name"
+                  class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" />
+
+                <div class="min-w-0 flex-1">
+                  <p class="truncate font-medium">{{ item.cartProductDto.name }}</p>
+                  @if (item.cartProductDto.variant) {
+                    <p class="text-sm text-surface-500">{{ item.cartProductDto.variant }}</p>
+                  }
+                  <p class="mt-1 text-sm font-medium text-surface-700">
+                    {{ item.cartProductDto.price | currency }}
+                  </p>
+                </div>
+
+                <p-inputNumber
+                  [ngModel]="item.quantity"
+                  (ngModelChange)="updateQuantity(item, $event)"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  [min]="1"
+                  [max]="item.cartProductDto.stockQuantity ?? 99"
+                  inputStyleClass="w-10 text-center"
+                  styleClass="w-24 flex-shrink-0" />
+
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-trash"
+                  severity="secondary"
+                  [text]="true"
+                  (click)="removeItem(item)"></button>
+              </div>
+            }
+          </div>
+        </p-card>
+
+        <!-- Billing details
+        <p-card header="Billing details">
+
+        </p-card> -->
+
+        <!-- Shipping location (simplified) -->
+        <p-card header="Shipping location">
+          <form [formGroup]="shippingForm" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="flex flex-col gap-1 sm:col-span-2">
+              <label for="address" class="text-sm font-medium text-surface-700">Address</label>
+              <input pInputText id="address" formControlName="address" class="w-full" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="city" class="text-sm font-medium text-surface-700">City</label>
+              <input pInputText id="city" formControlName="city" class="w-full" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label for="country" class="text-sm font-medium text-surface-700">Country</label>
+              <p-select
+                id="country"
+                formControlName="country"
+                [options]="countries"
+                optionLabel="label"
+                optionValue="value"
+                styleClass="w-full" />
+            </div>
+
+            <div class="flex flex-col gap-1 sm:col-span-2">
+              <label for="shippingMethod" class="text-sm font-medium text-surface-700">Shipping method</label>
+              <p-select
+                id="shippingMethod"
+                [options]="shippingMethods"
+                optionLabel="label"
+                [ngModel]="selectedShipping().value"
+                (ngModelChange)="selectShipping($event)"
+                [ngModelOptions]="{ standalone: true }"
+                optionValue="value"
+                styleClass="w-full" />
+            </div>
+          </form>
+        </p-card>
+      </div>
+
+      <!-- Right column: order summary (simplified) -->
+      <div class="lg:col-span-1">
+        <p-card header="Order summary" styleClass="lg:sticky lg:top-6">
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between text-sm text-surface-600">
+              <span>Subtotal</span>
+              <span>{{ subtotal() | currency }}</span>
+            </div>
+            <div class="flex justify-between text-sm text-surface-600">
+              <span>Shipping</span>
+              <span>{{ shippingCost() === 0 ? 'Free' : (shippingCost() | currency) }}</span>
+            </div>
+          </div>
+
+          <p-divider />
+
+          <div class="flex justify-between text-base font-semibold ">
+            <span>Total</span>
+            <span>{{ total() | currency }}</span>
+          </div>
+
+          <button
+            pButton
+            type="button"
+            label="Place order"
+            class="mt-6 w-full"
+            (click)="placeOrder()"></button>
+        </p-card>
+      </div>
+    </div>
+  }
+</div>

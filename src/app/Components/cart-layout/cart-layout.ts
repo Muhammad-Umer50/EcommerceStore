@@ -50,7 +50,7 @@ export class CartLayout implements OnInit {
   private OrderService = inject(OrderService)
   private router = inject(Router)
   // Set this to wherever your product images are actually served from.
-  private apiBaseUrl = 'https://localhost:7074';
+  private apiBaseUrl = 'https://uecommercestore.runasp.net/';
 
   cartItems = signal<CartItem []>([]);
   cartId: string | null = null;

@@ -1,8 +1,5 @@
 @if(loading()){
-<div class="card flex justify-center">
-  <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
-    [style]="{ width: '50px', height: '50px' }" />
-</div>
+  <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" />
 }
 @else {
 <div class="card" >

@@ -7,10 +7,10 @@ import { ButtonModule } from 'primeng/button';
 import { DataViewModule, DataViewPageEvent } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
 import { CommonModule } from '@angular/common';
-
+import { ProgressBarModule } from 'primeng/progressbar';
 @Component({
   selector: 'app-category-layout',
-  imports: [ButtonModule, DataViewModule, TagModule, CommonModule],
+  imports: [ButtonModule, DataViewModule, TagModule, CommonModule,ProgressBarModule],
   templateUrl: './category-layout.html',
   styleUrl: './category-layout.css',
 })
@@ -18,7 +18,7 @@ export class CategoryLayout implements OnInit {
   private route = inject(ActivatedRoute);
   private service = inject(CategoryService);
   private router = inject(Router);
-
+    loading = signal(true);
   imageBaseUrl = 'https://uecommercestore.runasp.net/' ;
   products$!: Observable<Product[]>;
 
@@ -29,9 +29,12 @@ export class CategoryLayout implements OnInit {
     this.products$ = this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
+        this.loading.set(false);
         return this.service.getCategoriesById(id);
+
       }),
       map(result => result.products)
+
     );
 
     // Restore page from the URL query param (survives back-navigation, refresh, deep links)

@@ -9,19 +9,22 @@ import { CommonModule } from '@angular/common';
 import { ProductInterface } from '../../Interfaces/product-interface';
 import { ProductService } from '../../Services/product-service';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ActivatedRoute, Router } from "@angular/router";
+import { MessageService } from 'primeng/api';
+import { ProgressBarModule } from 'primeng/progressbar';
 @Component({
   selector: 'app-products-layout',
   imports: [ButtonModule, DataViewModule, TagModule, CommonModule,
-            SelectButtonModule, FormsModule, PaginatorModule, ProgressSpinnerModule],
+            SelectButtonModule, FormsModule, PaginatorModule, ProgressBarModule],
   templateUrl: './products-layout.html',
   styleUrl: './products-layout.css',
+   providers: [MessageService]
 })
 export class ProductsLayout implements OnInit, AfterViewInit, OnDestroy {
 
   private productService = inject(ProductService);
   public ScrollPositionService = inject(ScrollPositionService)
+  private messageService = inject(MessageService);
   products = signal<ProductInterface[]>([]);
   router = inject(Router)
   route = inject(ActivatedRoute)

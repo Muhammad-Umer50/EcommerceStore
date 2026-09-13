@@ -1,5 +1,5 @@
 import { SearchService } from './../../Services/search-service';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
@@ -27,8 +27,8 @@ export class SearchLayout {
   private searchService = inject(SearchService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-
-  imageBaseUrl = 'https://localhost:7074';
+  loading = signal(true)
+  imageBaseUrl = 'https://uecommercestore.runasp.net/';
 
   first = 0;
   rows = 5;
@@ -60,14 +60,18 @@ export class SearchLayout {
           this.lastSearch = search;
 
           this.first = (pageFromUrl - 1) * this.rows;
+          this.loading.set(false);
 
           return this.searchService
             .getSearchedProducts(pageFromUrl, this.rows, search, 'price', false)
             .pipe(
               tap(res => (this.totalRecords = res.totalCount)),
-              map(res => res.items)
+              map(res => res.items),
+
             );
+
         })
+
       );
     })
   );

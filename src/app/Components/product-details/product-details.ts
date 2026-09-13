@@ -14,6 +14,7 @@ import { CartService } from '../../Services/cart-service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TokenService } from '../../AuthServices/token-service';
+import { ProgressBarModule } from 'primeng/progressbar';
 @Component({
   selector: 'app-product-details',
   imports: [ CommonModule,
@@ -21,7 +22,8 @@ import { TokenService } from '../../AuthServices/token-service';
     GalleriaModule,
     RatingModule,
     ButtonModule,
-  ToastModule],
+  ToastModule,
+ProgressBarModule],
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',
    providers: [MessageService]
@@ -30,6 +32,7 @@ export class ProductDetails implements OnInit {
  private messageService = inject(MessageService);
  mainurl = 'https://uecommercestore.runasp.net/'
  tokenservice = inject(TokenService);
+ loading = signal(true);
  showSuccess() {
   if(this.tokenservice.isLoggedin()){
     this.messageService.add({
@@ -68,6 +71,7 @@ export class ProductDetails implements OnInit {
     ).subscribe(res=>{
      this.productDetails = res
       this.images.set(res.images.filter(i => i.url));
+      this.loading.set(false);
     })
   }
 addToCart(product: ProductdetailsInterface) {

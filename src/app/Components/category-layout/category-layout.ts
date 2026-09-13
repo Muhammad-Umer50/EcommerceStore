@@ -19,7 +19,7 @@ export class CategoryLayout implements OnInit {
   private service = inject(CategoryService);
   private router = inject(Router);
 
-  imageBaseUrl = 'https://localhost:7074';
+  imageBaseUrl = 'https://uecommercestore.runasp.net/' ;
   products$!: Observable<Product[]>;
 
   rows = 5;

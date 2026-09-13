@@ -1,3 +1,7 @@
+@if (loading()) {
+   <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" />
+}
+@else{
 <div class="mx-auto max-w-5xl px-4 py-8">
   <h1 class="mb-6 text-2xl font-semibold ">
     My Shopping Cart
@@ -13,47 +17,6 @@
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <!-- Left column: items + billing + shipping -->
       <div class="space-y-6 lg:col-span-2">
-        <!-- Cart items -->
-        <!-- <p-card header="Shopping Cart">
-          <div class="divide-y divide-surface-200">
-            @for (item of cartItems(); track item.id) {
-              <div class="flex items-center gap-4 py-4">
-                <img
-                  [src]="getMainImage(item)"
-                  [alt]="item.cartProductDto.name"
-                  class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" />
-
-                <div class="min-w-0 flex-1">
-                  <p class="truncate font-medium">{{ item.cartProductDto.name }}</p>
-                  @if (item.cartProductDto.variant) {
-                    <p class="text-sm text-surface-500">{{ item.cartProductDto.variant }}</p>
-                  }
-                  <p class="mt-1 text-sm font-medium text-surface-700">
-                    {{ item.cartProductDto.price | currency }}
-                  </p>
-                </div>
-
-                <p-inputNumber
-                  [ngModel]="item.quantity"
-                  (ngModelChange)="updateQuantity(item, $event)"
-                  [showButtons]="true"
-                  buttonLayout="horizontal"
-                  [min]="1"
-                  [max]="item.cartProductDto.stockQuantity ?? 99"
-                  inputStyleClass="w-10 text-center"
-                  styleClass="w-24 flex-shrink-0" />
-
-                <button
-                  pButton
-                  type="button"
-                  icon="pi pi-trash"
-                  severity="secondary"
-                  [text]="true"
-                  (click)="removeItem(item)"></button>
-              </div>
-            }
-          </div>
-        </p-card> -->
 <p-card header="Shopping Cart">
   <div class="divide-y divide-surface-200">
     @for (item of cartItems(); track item.id) {
@@ -178,3 +141,4 @@
     </div>
   }
 </div>
+}

@@ -16,7 +16,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { RadioButtonModule } from 'primeng/radiobutton';
-
+import { ProgressBarModule } from 'primeng/progressbar';
 import {
   BillingDetails,
   CartItem,
@@ -41,6 +41,7 @@ import { Router } from '@angular/router';
     InputTextModule,
     SelectModule,
     RadioButtonModule,
+    ProgressBarModule,
   ],
   templateUrl: './cart-layout.html',
   styleUrl: './cart-layout.css',
@@ -54,7 +55,7 @@ export class CartLayout implements OnInit {
 
   cartItems = signal<CartItem []>([]);
   cartId: string | null = null;
-
+  loading = signal(true)
   ngOnInit(): void {
     // Read fresh on init rather than at property-initialization time.
     this.cartId = localStorage.getItem('CartId');
@@ -73,9 +74,11 @@ export class CartLayout implements OnInit {
           quantity: item.quantity ?? 1,
         }));
         this.cartItems.set(normalized);
+        this.loading.set(false)
       },
       error: (err) => {
         console.error('Failed to load cart items', err);
+        this.loading.set(false)
       },
     });
   }

@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, map, switchMap, tap } from 'rxjs';
 import { ProductItem } from '../../Interfaces/searchlayout-interface';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-search-layout',
@@ -18,7 +17,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TagModule,
     CommonModule,
     PaginatorModule,
-    ProgressSpinnerModule,
   ],
   templateUrl: './search-layout.html',
   styleUrl: './search-layout.css',
@@ -27,7 +25,6 @@ export class SearchLayout {
   private searchService = inject(SearchService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  loading = signal(true)
   imageBaseUrl = 'https://uecommercestore.runasp.net/';
 
   first = 0;
@@ -60,14 +57,13 @@ export class SearchLayout {
           this.lastSearch = search;
 
           this.first = (pageFromUrl - 1) * this.rows;
-          this.loading.set(false);
+
 
           return this.searchService
             .getSearchedProducts(pageFromUrl, this.rows, search, 'price', false)
             .pipe(
               tap(res => (this.totalRecords = res.totalCount)),
               map(res => res.items),
-
             );
 
         })

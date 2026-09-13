@@ -1,10 +1,9 @@
-import { AuthService } from './../../AuthServices/auth-service';
 import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { SearchService } from './../../Services/search-service';
 import { ChangeDetectorRef, Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
@@ -19,7 +18,6 @@ import { categoriesInterface } from '../../Interfaces/product-interface';
 import { catchError, Observable } from 'rxjs';
 import { Suggestioninterface } from '../../Interfaces/suggestioninterface';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { HttpParams } from '@angular/common/http';
 import { TokenService } from '../../AuthServices/token-service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -37,7 +35,6 @@ import { RippleModule } from 'primeng/ripple';
     IconFieldModule,
     InputIconModule,
     OverlayBadgeModule,
-    RouterLinkActive,
     AutoCompleteModule,
     ButtonModule,
     ToastModule,

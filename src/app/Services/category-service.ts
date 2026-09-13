@@ -15,7 +15,7 @@ export class CategoryService {
    return this.http.get<categoriesInterface[]>(this.url);
   }
 
-  getCategoriesById(id:string|null){
+  getCategoriesById(id:string|null):Observable<CategorylayoutInterface>{
     const url =  `https://uecommercestore.runasp.net/categoryById?categoryId=${id}`;
     const result = this.http.get<CategorylayoutInterface>(url)
     return result;

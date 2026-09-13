@@ -13,7 +13,7 @@ export class OrderService {
     const url = `https://uecommercestore.runasp.net/api/Order/createOrder`
     return this.http.post<CreateOrderInterface>(url,payload)
   }
-  GetOrders(){
+  GetOrders():Observable<GetOrderInterface[]>{
     const url = `https://uecommercestore.runasp.net/api/Order/getOrder`
     return this.http.get<GetOrderInterface[]>(url)
   }

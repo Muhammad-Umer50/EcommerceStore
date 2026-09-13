@@ -11,7 +11,7 @@ import { ProductResponse } from '../Interfaces/searchlayout-interface';
 export class SearchService {
   http = inject(HttpClient);
 
-  getSuggestionResult(Query:string ){
+  getSuggestionResult(Query:string ):Observable<Suggestioninterface[]>{
     const url = `https://uecommercestore.runasp.net/SearchSuggestions?searchSuggestion=${Query}`;
    return this.http.get<Suggestioninterface[]>(url)
   }

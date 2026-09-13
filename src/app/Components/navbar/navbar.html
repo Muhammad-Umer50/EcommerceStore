@@ -9,11 +9,11 @@
       </a>
 
       <nav class="navbar__nav" aria-label="Primary">
-        <a class="navbar__link" routerLink="/" routerLinkActive="navbar__link--active"
+        <!-- <a class="navbar__link" routerLink="/" routerLinkActive="navbar__link--active"
           [routerLinkActiveOptions]="{ exact: true }">
           <i class="pi pi-home"></i>
           <span>Home</span>
-        </a>
+        </a> -->
 
         <button type="button" class="navbar__link navbar__link--menu" (click)="categoryMenu.toggle($event)"
           aria-haspopup="true" [disabled]="categoriesLoading || categoriesError">
@@ -85,7 +85,7 @@
   </div>
 </div>
     <!-- Right: cart + profile -->
-        <p-toast position="top-left" key="tl" />
+        <p-toast position="top-left" key="tl" [style]="{ width: 'clamp(280px, 90vw, 400px)' }"/>
     <div class="navbar__right">
       <button type="button" class="navbar__icon-btn" (click)="onCartClick()" aria-label="Cart">
         <p-overlaybadge [value]="cartCount > 0 ? (cartCount > 99 ? '99+' : cartCount) : undefined" severity="danger">
